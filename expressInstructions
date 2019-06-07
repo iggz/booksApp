@@ -1,0 +1,37 @@
+# how to install express generator
+
+
+// first step is global
+
+npm install express-generator -g
+npm install nodemon 
+express --no-view express-generator-class
+npm install
+npm i express-es6-template-engine --save
+
+//ADD THIS UNDER "START" IN PACKAGE.JSON
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
+
+// then do this to run it
+npm run dev
+
+
+
+
+//change top of app.js file to use const intead of var:
+const express = require('express'),
+    path = require('path'),
+    cookieParser = require('cookie-parser'),
+    logger = require('morgan'),
+    indexRouter = require('./routes/index'),
+    usersRouter = require('./routes/users');
+
+
+// in routes/template.html change it to this:
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('template', { title: 'Express' });
+});
+
+module.exports = router;

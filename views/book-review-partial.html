@@ -1,0 +1,63 @@
+<p>This is the book-review-partial</p>
+
+<ul>
+    <li>${singleBook.author}</li>
+    <li>${singleBook.title}</li>
+</ul>
+
+<br/>
+
+${allReviews.map( review => 
+    `
+    <p>reviewer name: ${review.first_name}</p>
+    <p>score: ${review.score}/10</p>
+    <br/>
+    <p>review: ${review.content}</p>
+    <hr/>
+    `
+    ).join('')}
+
+    ${!!is_logged_in ? `
+    
+    
+
+    <form action="/books/${singleBook.id}" method='POST'>
+        <textarea class='textarea' rows="4" cols="50" name="content" placeholder="Leave a review..."></textarea>
+        <br/>
+        Stars:
+            <label>
+                <input class='starRadio' type="radio" name="score" value="1">1
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="2">2
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="3">3
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="4">4
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="5">5
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="6">6
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="7">7
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="8">8
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="9">9
+            </label>
+            <label>
+                <input class='starRadio' type="radio" name="score" value="10">10
+            </label>
+
+        <br/>
+        <br/>
+        <button name='id' class='button is-primary' value=${singleBook.id} type="submit">submit</button>
+    </form>
+`:` Please login to leave a review`}
