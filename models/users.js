@@ -1,5 +1,4 @@
-const db = require('./conn'),
-    bcrypt = require('bcryptjs');
+const db = require('./conn');
 
 class User {
     constructor(id, first_name, last_name, email, password) {
@@ -23,12 +22,6 @@ class User {
         }
     }
 
-    async checkPassword(hashedPassword) {
-        console.log("checkPassword this.password: ", this.password);
-        console.log("checkPassword hashedPassword: ", hashedPassword);
-        return bcrypt.compareSync(this.password, hashedPassword);
-    }
-
     async save() {
         try {
             const response = await db.one(`
@@ -45,27 +38,21 @@ class User {
         }
     }
 
-    async login() {
-        console.log('async login');
-        try {
-            const response = await db.one(`
+    async getUserByEmail() {
+        try{
+            const userData = await db.one(`
                 SELECT id, first_name, last_name, password
                 FROM users
                 WHERE email = $1
                 `, [this.email]);
-                console.log('hash is: ', response.password);
-            const isValid = await this.checkPassword(response.password);
-            if (!!isValid) {
-                const { first_name, last_name, id } = response;
-                return { isValid, first_name, last_name, user_id: id}
-            } else {
-            return { isValid }
-            };
-        
+                console.log('hash is: ', userData.password);
+                return userData;
+
         } catch(err) {
             return err.message;
-        } 
+        }
     }
+
 }
 
 module.exports = User;
