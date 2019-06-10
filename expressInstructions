@@ -35,3 +35,6 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+This creates a new branch 
+// git checkout -b controllers_in_class
