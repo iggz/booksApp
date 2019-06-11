@@ -68,11 +68,15 @@ exports.signup_post = async (req,res) => {
 
 exports.login_post = async (req,res) => {
     const {email, password } = req.body;
-    console.log(req.body);
-    const userInstance = new User(null, null, null, email, password);
+    console.log("login_post req.body", req.body);
 
+    const userInstance = new User(null, null, null, email, password);
+    // userInstance.login().then(response => {
+    //     req.session.is_logged_in = response.isValid;
+    //     console.log("Post login response is: ", response)
+    // })
     const userData = await userInstance.getUserByEmail();
-    console.log( userData)
+    console.log("userData: ", userData)
     
     const isValid = await bcrypt.compareSync(password, userData.password);
 
@@ -80,7 +84,7 @@ exports.login_post = async (req,res) => {
         req.session.is_logged_in = true;
         req.session.first_name = userData.first_name;
         req.session.last_name = userData.last_name;
-        req.session.user_id = userData.user_id;
+        req.session.user_id = userData.id;  // this used to not work because it called user_id which does not exist within the session.
         res.redirect('/');
     } else {
         res.sendStatus(401);

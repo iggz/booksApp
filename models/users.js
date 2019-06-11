@@ -22,6 +22,17 @@ class User {
         }
     }
 
+    static async getAllUsers() {
+        try {
+            const response = await db.any(`
+                SELECT * FROM users
+            `);
+            return response;
+        } catch(err) {
+            return(err.message);
+        }
+    }
+
     async save() {
         try {
             const response = await db.one(`
@@ -53,6 +64,20 @@ class User {
         }
     }
 
+    async getUserById() {
+        try{
+            const userData = await db.one(`
+                SELECT first_name, last_name, email, password
+                FROM users
+                WHERE id = $1
+                `, [this.id]);
+                console.log('hash is: ', userData.password);
+                return userData;
+
+        } catch(err) {
+            return err.message;
+        }
+    }
 }
 
 module.exports = User;

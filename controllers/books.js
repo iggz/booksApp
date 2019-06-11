@@ -42,8 +42,8 @@ exports.book_by_id_get = async (req, res) => {
 }
 
 exports.book_by_id_post = async (req, res) => {
-    console.log(req.body);    // from form
-    console.log(req.params);  // from url
+    console.log("req.body from book_by_id_post:",req.body);    // from form
+    console.log("req.params from book_by_id_post:", req.params);  // from url
 
     const {content, score, id} = req.body;
     const bookInstance = new Book(id, null, null);

@@ -43,19 +43,19 @@ class Book {
         }
     }
 
-    async addReview(content, score, user_id) {
+    async addReview(score, content, user_id) {
         try {
             const response = await db.any(`
-                INSERT INTO reviews(content, score, book_id, user_id)
+                INSERT INTO reviews(score, content, book_id, user_id)
                 VALUES ($1, $2, $3, $4)
 
             `,[score, content, parseInt(this.id), user_id])
+            console.log("addReview has run", user_id);
             return response;
         }catch(err) {
             return err.message;
         }
     }
-
 }
 
 module.exports = Book;
